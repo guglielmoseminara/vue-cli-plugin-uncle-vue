@@ -37,6 +37,7 @@ function getContentMain(appUncleFile) {
 }
 
 function writeConfig(configUncleFile, contentMain) {
+    console.log(configUncleFile);
     fs.writeFileSync(configUncleFile, "module.exports = {xmlConfig: `"+contentMain+"`}", { encoding: 'utf-8' });
 }
 
@@ -162,14 +163,13 @@ function prettifyXML(xmlText) {
 }
 
 function uncleLoop() {
-    const configUncleFile = path.resolve('./uncle.config.js');
     load();
     const contentMain = getContentMain(appUncleFile);
     parseModules(contentMain);
     parseReplace(contentMain);
     parseAppend(contentMain);
     parsePrepend(contentMain);
-    writeConfig(configUncleFile, prettifyXML(contentMain.html()));
+    writeConfig(path.resolve('./uncle.xml.js'), prettifyXML(contentMain.html()));
 }
 
 module.exports = (api, opts) => {
